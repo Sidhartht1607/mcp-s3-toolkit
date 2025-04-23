@@ -29,20 +29,20 @@ def list_files(bucket_name: str) -> list:
 def delete_file(bucket_name: str, key: str) -> str:
     """Delete a file from a bucket."""
     s3.delete_object(Bucket=bucket_name.strip(), Key=key.strip())
-    return f"🗑️ Deleted '{key}' from '{bucket_name}'."
+    return f" Deleted '{key}' from '{bucket_name}'."
 
 @mcp.tool()
 def upload_text(bucket_name: str, key: str, content: str) -> str:
     """Upload string content as a text file to S3."""
     s3.put_object(Bucket=bucket_name.strip(), Key=key.strip(), Body=content.encode('utf-8'))
-    return f"✅ Uploaded text content as '{key}'."
+    return f" Uploaded text content as '{key}'."
 
 @mcp.tool()
 def upload_file(bucket_name: str, file_path: str, s3_key: str = None) -> str:
     """Upload a local file to S3."""
     s3_key = s3_key or os.path.basename(file_path)
     s3.upload_file(file_path, bucket_name.strip(), s3_key.strip())
-    return f"✅ Uploaded '{file_path}' as '{s3_key}'"
+    return f"Uploaded '{file_path}' as '{s3_key}'"
 
 @mcp.tool()
 def download_and_preview(bucket_name: str, key: str) -> str:
@@ -59,12 +59,12 @@ def download_and_preview(bucket_name: str, key: str) -> str:
             reader = PdfReader(file_path)
             content = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
         else:
-            content = "❌ Unsupported file format for preview."
+            content = " Unsupported file format for preview."
 
         os.remove(file_path)
         return content
     except Exception as e:
-        return f"❌ Error during file preview: {str(e)}"
+        return f" Error during file preview: {str(e)}"
 
 @mcp.tool()
 def upload_report(bucket_name: str, key: str, lines: list[str]) -> str:
@@ -76,8 +76,8 @@ def upload_report(bucket_name: str, key: str, lines: list[str]) -> str:
 
     try:
         s3.upload_file(temp_file, bucket_name.strip(), key.strip())
-        return f"✅ Uploaded report as '{key}'"
+        return f" Uploaded report as '{key}'"
     except Exception as e:
-        return f"❌ Upload failed: {str(e)}"
+        return f" Upload failed: {str(e)}"
     finally:
         os.remove(temp_file)
