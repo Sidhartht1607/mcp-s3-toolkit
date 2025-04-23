@@ -46,3 +46,21 @@ This server exposes an AWS S3 interface as tools for an LLM agent via the Model 
     "Line 1",
     "Line 2"
   ]
+2. Create and activate virtual environment
+
+- python3 -m venv venv
+- source venv/bin/activate
+
+3. Install dependencies
+
+- pip install -r requirements.txt
+
+4. Create your .env file
+
+- AWS_ACCESS_KEY_ID=your_access_key
+- AWS_SECRET_ACCESS_KEY=your_secret_key
+- AWS_DEFAULT_REGION=us-east-1
+
+🧪 Run the MCP Server in Dev Mode
+
+- mcp dev s3_mcp_server.py
